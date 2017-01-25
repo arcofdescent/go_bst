@@ -4,9 +4,8 @@ package bst
 //import "fmt"
 
 type Node struct {
-	Data       int
-	LeftChild  *Node
-	RightChild *Node
+	Data                  int
+	LeftChild, RightChild *Node
 }
 
 func NewRoot(val int) *Node {

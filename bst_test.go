@@ -19,3 +19,25 @@ func TestNewRoot(t *testing.T) {
 		t.Errorf("NewRoot()")
 	}
 }
+
+/*
+
+func TestAddNode(t *testing.T) {
+}
+
+func TestSearch(t *testing.T) {
+}
+
+func TestDeleteNode(t *testing.T) {
+}
+
+func TestImmutability(t *testing.T) {
+}
+
+func TestConcurrency(t *testing.T) {
+}
+
+func TestMemUsage(t *testing.T) {
+}
+
+*/
