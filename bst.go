@@ -1,7 +1,7 @@
 // sorted binary tree
 package bst
 
-//import "fmt"
+import "fmt"
 
 type Node struct {
 	Data                  int
@@ -42,13 +42,32 @@ func (n *Node) Search(val int) bool {
 
 	// Process LeftChild
 	if n.LeftChild != nil {
-		return n.LeftChild.Search(val)
+		n.LeftChild.Search(val)
 	}
 
 	// Process RightChild
 	if n.RightChild != nil {
-		return n.RightChild.Search(val)
+		n.RightChild.Search(val)
 	}
 
-	return false
+	return true
+}
+
+func (n *Node) PrintTree() {
+
+	// inorder traversal
+
+	// Process LeftChild
+	if n.LeftChild != nil {
+		n.LeftChild.PrintTree()
+	}
+
+	// Process Node
+	fmt.Printf("%d ", n.Data)
+
+	// Process RightChild
+	if n.RightChild != nil {
+		n.RightChild.PrintTree()
+	}
+
 }
