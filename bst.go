@@ -1,8 +1,6 @@
 // sorted binary tree
 package bst
 
-import "fmt"
-
 type Node struct {
 	Data                  int
 	LeftChild, RightChild *Node
@@ -17,7 +15,7 @@ func NewRoot(val int) *Node {
 
 func (n *Node) AddNode(val int) {
 
-	// check val does not already exist
+	// check that val does not already exist, i,e. no dups
 	if n.Search(val) {
 		return
 	}
@@ -43,7 +41,9 @@ func (n *Node) AddNode(val int) {
 
 func (n *Node) Search(val int) bool {
 
-	// iteratively to prevent stack overflow
+	// iteratively to prevent a stack overflow
+	// normally this is done using recursion which can
+	// cause a SO for huge trees
 	currNode := n
 
 	for currNode != nil {
@@ -94,10 +94,8 @@ func (n *Node) DeleteNode(val int) {
 			n.Data = successor.Data
 			successor.DeleteNode(successor.Data)
 		} else if n.LeftChild != nil {
-			fmt.Println("LeftChild")
 			oneChildDelete(n, n.LeftChild)
 		} else if n.RightChild != nil {
-			fmt.Println("RightChild")
 			oneChildDelete(n, n.RightChild)
 		} else {
 			// leaf node
@@ -113,8 +111,8 @@ func (n *Node) DeleteNode(val int) {
 	}
 }
 
-// This function handles the replacement of the node with its child in the case
-// of deleting a node with one child
+// This function handles the replacement of the node
+// with its child in the case of deleting a node with one child
 func oneChildDelete(node *Node, childNode *Node) {
 	if node.Parent != nil {
 		if node.Parent.LeftChild != nil {

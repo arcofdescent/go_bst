@@ -3,16 +3,6 @@ package bst
 import "testing"
 import "reflect"
 import "math/rand"
-import "fmt"
-
-/*
-	tests := []struct {
-		input int
-		expected int
-	}{
-		{1, 4},
-	}
-*/
 
 func TestNewRoot(t *testing.T) {
 	rootNode := NewRoot(5)
@@ -121,9 +111,6 @@ func TestDeleteNodeOneChildLeft(t *testing.T) {
 
 	rootNode.DeleteNode(4)
 
-	items := rootNode.GetItems()
-	fmt.Printf("%v\n", items)
-
 	if rootNode.Search(4) == true {
 		t.Errorf("DeleteNode(): 4 found")
 	}
@@ -135,9 +122,6 @@ func TestDeleteNodeOneChildRight(t *testing.T) {
 	rootNode.AddNode(4)
 
 	rootNode.DeleteNode(3)
-
-	items := rootNode.GetItems()
-	fmt.Printf("%v\n", items)
 
 	if rootNode.Search(3) == true {
 		t.Errorf("DeleteNode(): 3 found")
@@ -151,9 +135,6 @@ func TestDeleteNodeTwoChild(t *testing.T) {
 	rootNode.AddNode(5)
 
 	rootNode.DeleteNode(4)
-
-	items := rootNode.GetItems()
-	fmt.Printf("%v\n", items)
 
 	if rootNode.Search(4) == true {
 		t.Errorf("DeleteNode(): 4 found")
