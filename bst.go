@@ -6,6 +6,7 @@ package bst
 type Node struct {
 	Data                  int
 	LeftChild, RightChild *Node
+	Parent                *Node
 }
 
 func NewRoot(val int) *Node {
@@ -17,13 +18,17 @@ func NewRoot(val int) *Node {
 func (n *Node) AddNode(val int) {
 	if val < n.Data {
 		if n.LeftChild == nil {
-			n.LeftChild = &Node{Data: val}
+			newNode := &Node{Data: val}
+			n.LeftChild = newNode
+			newNode.Parent = n
 		} else {
 			n.LeftChild.AddNode(val)
 		}
 	} else {
 		if n.RightChild == nil {
-			n.RightChild = &Node{Data: val}
+			newNode := &Node{Data: val}
+			n.RightChild = newNode
+			newNode.Parent = n
 		} else {
 			n.RightChild.AddNode(val)
 		}
@@ -48,7 +53,43 @@ func (n *Node) Search(val int) bool {
 	return false
 }
 
+func (n *Node) SearchNode(val int) *Node {
+
+	// iteratively to prevent stack overflow
+	currNode := n
+
+	for currNode != nil {
+		if val == currNode.Data {
+			return currNode
+		} else if val < currNode.Data {
+			currNode = currNode.LeftChild
+		} else {
+			currNode = currNode.RightChild
+		}
+	}
+
+	return nil
+}
+
 func (n *Node) DeleteNode(val int) {
+
+	// get the node
+	node := n.SearchNode(val)
+	if node == nil {
+		return
+	}
+
+	// is the node a leaf i.e. no siblings
+	if node.LeftChild == nil && node.RightChild == nil {
+		// get rid of it
+		parent := node.Parent
+
+		if node.Data < parent.Data {
+			parent.LeftChild = nil
+		} else {
+			parent.RightChild = nil
+		}
+	}
 }
 
 func (n *Node) GetItems() []int {

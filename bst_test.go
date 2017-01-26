@@ -95,13 +95,20 @@ func TestSearch(t *testing.T) {
 func TestDeleteNode(t *testing.T) {
 	rootNode := NewRoot(5)
 	rootNode.AddNode(4)
-	rootNode.AddNode(3)
 
-	// delete
+	// delete (left child)
 	rootNode.DeleteNode(4)
 
 	if rootNode.Search(4) == true {
 		t.Errorf("DeleteNode(): 4 found")
+	}
+
+	// delete (left child)
+	rootNode.AddNode(6)
+	rootNode.DeleteNode(6)
+
+	if rootNode.Search(6) == true {
+		t.Errorf("DeleteNode(): 6 found")
 	}
 }
 
