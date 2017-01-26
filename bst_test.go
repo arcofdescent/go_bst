@@ -3,6 +3,8 @@ package bst
 import "testing"
 import "reflect"
 
+//import "fmt"
+
 /*
 	tests := []struct {
 		input int
@@ -26,6 +28,20 @@ func TestAddNode(t *testing.T) {
 
 	if rootNode.Search(4) != true {
 		t.Errorf("AddNode(): 4 not found")
+	}
+}
+
+func TestGetItems(t *testing.T) {
+	rootNode := NewRoot(5)
+	rootNode.AddNode(4)
+	rootNode.AddNode(8)
+	rootNode.AddNode(6)
+	rootNode.AddNode(2)
+
+	expected := []int{2, 4, 5, 6, 8}
+	items := rootNode.GetItems()
+	if !reflect.DeepEqual(items, expected) {
+		t.Errorf(`GetItems()`)
 	}
 }
 
@@ -76,10 +92,20 @@ func TestSearch(t *testing.T) {
 	}
 }
 
-/*
 func TestDeleteNode(t *testing.T) {
+	rootNode := NewRoot(5)
+	rootNode.AddNode(4)
+	rootNode.AddNode(3)
+
+	// delete
+	rootNode.DeleteNode(4)
+
+	if rootNode.Search(4) == true {
+		t.Errorf("DeleteNode(): 4 found")
+	}
 }
 
+/*
 func TestImmutability(t *testing.T) {
 }
 
