@@ -16,6 +16,12 @@ func NewRoot(val int) *Node {
 }
 
 func (n *Node) AddNode(val int) {
+
+	// check val does not already exist
+	if n.Search(val) {
+		return
+	}
+
 	if val < n.Data {
 		if n.LeftChild == nil {
 			newNode := &Node{Data: val}
@@ -72,6 +78,10 @@ func (n *Node) SearchNode(val int) *Node {
 }
 
 func (n *Node) DeleteNode(val int) {
+
+	if !n.Search(val) {
+		return
+	}
 
 	if val < n.Data {
 		n.LeftChild.DeleteNode(val)
