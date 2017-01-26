@@ -3,7 +3,7 @@ package bst
 import "testing"
 import "reflect"
 
-//import "fmt"
+import "fmt"
 
 /*
 	tests := []struct {
@@ -92,7 +92,7 @@ func TestSearch(t *testing.T) {
 	}
 }
 
-func TestDeleteNode(t *testing.T) {
+func TestDeleteNodeLeaf(t *testing.T) {
 	rootNode := NewRoot(5)
 	rootNode.AddNode(4)
 
@@ -109,6 +109,52 @@ func TestDeleteNode(t *testing.T) {
 
 	if rootNode.Search(6) == true {
 		t.Errorf("DeleteNode(): 6 found")
+	}
+}
+
+func TestDeleteNodeOneChildLeft(t *testing.T) {
+	rootNode := NewRoot(5)
+	rootNode.AddNode(4)
+	rootNode.AddNode(3)
+
+	rootNode.DeleteNode(4)
+
+	items := rootNode.GetItems()
+	fmt.Printf("%v\n", items)
+
+	if rootNode.Search(4) == true {
+		t.Errorf("DeleteNode(): 4 found")
+	}
+}
+
+func TestDeleteNodeOneChildRight(t *testing.T) {
+	rootNode := NewRoot(5)
+	rootNode.AddNode(3)
+	rootNode.AddNode(4)
+
+	rootNode.DeleteNode(3)
+
+	items := rootNode.GetItems()
+	fmt.Printf("%v\n", items)
+
+	if rootNode.Search(3) == true {
+		t.Errorf("DeleteNode(): 3 found")
+	}
+}
+
+func TestDeleteNodeTwoChild(t *testing.T) {
+	rootNode := NewRoot(6)
+	rootNode.AddNode(4)
+	rootNode.AddNode(3)
+	rootNode.AddNode(5)
+
+	rootNode.DeleteNode(4)
+
+	items := rootNode.GetItems()
+	fmt.Printf("%v\n", items)
+
+	if rootNode.Search(4) == true {
+		t.Errorf("DeleteNode(): 4 found")
 	}
 }
 

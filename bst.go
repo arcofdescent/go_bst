@@ -1,7 +1,7 @@
 // sorted binary tree
 package bst
 
-//import "fmt"
+import "fmt"
 
 type Node struct {
 	Data                  int
@@ -73,23 +73,56 @@ func (n *Node) SearchNode(val int) *Node {
 
 func (n *Node) DeleteNode(val int) {
 
-	// get the node
-	node := n.SearchNode(val)
-	if node == nil {
-		return
-	}
+	if val < n.Data {
+		n.LeftChild.DeleteNode(val)
+	} else if val > n.Data {
+		n.RightChild.DeleteNode(val)
+	} else {
 
-	// is the node a leaf i.e. no siblings
-	if node.LeftChild == nil && node.RightChild == nil {
-		// get rid of it
-		parent := node.Parent
-
-		if node.Data < parent.Data {
-			parent.LeftChild = nil
+		if n.LeftChild != nil && n.RightChild != nil {
+			successor := n.RightChild.findMinNode()
+			n.Data = successor.Data
+			successor.DeleteNode(successor.Data)
+		} else if n.LeftChild != nil {
+			fmt.Println("LeftChild")
+			oneChildDelete(n, n.LeftChild)
+		} else if n.RightChild != nil {
+			fmt.Println("RightChild")
+			oneChildDelete(n, n.RightChild)
 		} else {
-			parent.RightChild = nil
+			// leaf node
+			parent := n.Parent
+
+			if n.Data < parent.Data {
+				parent.LeftChild = nil
+			} else {
+				parent.RightChild = nil
+			}
+		}
+
+	}
+}
+
+// This function handles the replacement of the node with its child in the case
+// of deleting a node with one child
+func oneChildDelete(node *Node, childNode *Node) {
+	if node.Parent != nil {
+		if node.Parent.LeftChild != nil {
+			node.Parent.LeftChild = childNode
+		} else {
+			node.Parent.RightChild = childNode
 		}
 	}
+
+	childNode = node.Parent
+}
+
+func (n *Node) findMinNode() *Node {
+	for n.LeftChild != nil {
+		n = n.LeftChild
+	}
+
+	return n
 }
 
 func (n *Node) GetItems() []int {
