@@ -12,6 +12,8 @@ Run the tests
 
 `
 go test
+`
+`
 go test -v
 `
 
@@ -19,7 +21,7 @@ To see test coverage
 
 `go test -cover`
 
-To run a benchmark for **AddNode()**
+To run a simple benchmark for **AddNode()**
 
 `go test -bench=.`
 
