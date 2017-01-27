@@ -43,7 +43,7 @@ package main
 import "fmt"
 import "nilenso_bst" // assuming you have it installed properly
 
-rootNode := NewRoot(7)
+rootNode := nilenso_bst.NewRoot(7)
 rootNode.AddNode(5)
 rootNode.AddNode(9)
 rootNode.AddNode(8)
