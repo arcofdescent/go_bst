@@ -37,7 +37,7 @@ go test -bench=.
 
 ####Usage
 
-```
+```go
 package main
 
 import "fmt"
