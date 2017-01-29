@@ -4,9 +4,9 @@ package bst
 import "sync"
 
 type Node struct {
-	Data                  int
-	LeftChild, RightChild *Node
-	Parent                *Node
+	data                  int
+	leftChild, rightChild *Node
+	parent                *Node
 	ch                    chan<- int
 }
 
@@ -17,7 +17,7 @@ func NewRoot(val int, ch chan<- int) *Node {
 	defer func() { ch <- 1 }()
 
 	root := Node{}
-	root.Data = val
+	root.data = val
 	root.ch = ch
 	return &root
 }
@@ -31,21 +31,21 @@ func (n *Node) AddNode(val int) {
 		return
 	}
 
-	if val < n.Data {
-		if n.LeftChild == nil {
-			newNode := &Node{Data: val}
-			n.LeftChild = newNode
-			newNode.Parent = n
+	if val < n.data {
+		if n.leftChild == nil {
+			newNode := &Node{data: val}
+			n.leftChild = newNode
+			newNode.parent = n
 		} else {
-			n.LeftChild.AddNode(val)
+			n.leftChild.AddNode(val)
 		}
 	} else {
-		if n.RightChild == nil {
-			newNode := &Node{Data: val}
-			n.RightChild = newNode
-			newNode.Parent = n
+		if n.rightChild == nil {
+			newNode := &Node{data: val}
+			n.rightChild = newNode
+			newNode.parent = n
 		} else {
-			n.RightChild.AddNode(val)
+			n.rightChild.AddNode(val)
 		}
 	}
 }
@@ -60,12 +60,12 @@ func (n *Node) Search(val int) bool {
 	currNode := n
 
 	for currNode != nil {
-		if val == currNode.Data {
+		if val == currNode.data {
 			return true
-		} else if val < currNode.Data {
-			currNode = currNode.LeftChild
+		} else if val < currNode.data {
+			currNode = currNode.leftChild
 		} else {
-			currNode = currNode.RightChild
+			currNode = currNode.rightChild
 		}
 	}
 
@@ -80,12 +80,12 @@ func (n *Node) SearchNode(val int) *Node {
 	currNode := n
 
 	for currNode != nil {
-		if val == currNode.Data {
+		if val == currNode.data {
 			return currNode
-		} else if val < currNode.Data {
-			currNode = currNode.LeftChild
+		} else if val < currNode.data {
+			currNode = currNode.leftChild
 		} else {
-			currNode = currNode.RightChild
+			currNode = currNode.rightChild
 		}
 	}
 
@@ -100,28 +100,28 @@ func (n *Node) DeleteNode(val int) {
 		return
 	}
 
-	if val < n.Data {
-		n.LeftChild.DeleteNode(val)
-	} else if val > n.Data {
-		n.RightChild.DeleteNode(val)
+	if val < n.data {
+		n.leftChild.DeleteNode(val)
+	} else if val > n.data {
+		n.rightChild.DeleteNode(val)
 	} else {
 
-		if n.LeftChild != nil && n.RightChild != nil {
-			successor := n.RightChild.findMinNode()
-			n.Data = successor.Data
-			successor.DeleteNode(successor.Data)
-		} else if n.LeftChild != nil {
-			oneChildDelete(n, n.LeftChild)
-		} else if n.RightChild != nil {
-			oneChildDelete(n, n.RightChild)
+		if n.leftChild != nil && n.rightChild != nil {
+			successor := n.rightChild.findMinNode()
+			n.data = successor.data
+			successor.DeleteNode(successor.data)
+		} else if n.leftChild != nil {
+			oneChildDelete(n, n.leftChild)
+		} else if n.rightChild != nil {
+			oneChildDelete(n, n.rightChild)
 		} else {
 			// leaf node
-			parent := n.Parent
+			parent := n.parent
 
-			if n.Data < parent.Data {
-				parent.LeftChild = nil
+			if n.data < parent.data {
+				parent.leftChild = nil
 			} else {
-				parent.RightChild = nil
+				parent.rightChild = nil
 			}
 		}
 
@@ -131,20 +131,20 @@ func (n *Node) DeleteNode(val int) {
 // This function handles the replacement of the node
 // with its child in the case of deleting a node with one child
 func oneChildDelete(node *Node, childNode *Node) {
-	if node.Parent != nil {
-		if node.Parent.LeftChild != nil {
-			node.Parent.LeftChild = childNode
+	if node.parent != nil {
+		if node.parent.leftChild != nil {
+			node.parent.leftChild = childNode
 		} else {
-			node.Parent.RightChild = childNode
+			node.parent.rightChild = childNode
 		}
 	}
 
-	childNode = node.Parent
+	childNode = node.parent
 }
 
 func (n *Node) findMinNode() *Node {
-	for n.LeftChild != nil {
-		n = n.LeftChild
+	for n.leftChild != nil {
+		n = n.leftChild
 	}
 
 	return n
@@ -158,17 +158,17 @@ func (n *Node) GetItems() []int {
 
 	// inorder traversal
 
-	// Process LeftChild
-	if n.LeftChild != nil {
-		vals = append(vals, n.LeftChild.GetItems()...)
+	// Process leftChild
+	if n.leftChild != nil {
+		vals = append(vals, n.leftChild.GetItems()...)
 	}
 
 	// Process Node
-	vals = append(vals, n.Data)
+	vals = append(vals, n.data)
 
-	// Process RightChild
-	if n.RightChild != nil {
-		vals = append(vals, n.RightChild.GetItems()...)
+	// Process rightChild
+	if n.rightChild != nil {
+		vals = append(vals, n.rightChild.GetItems()...)
 	}
 
 	return vals
