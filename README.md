@@ -23,12 +23,6 @@ Additionally
 go test -v
 ```
 
-To see test coverage
-
-```
-go test -cover
-```
-
 To run a simple benchmark for **AddNode()**
 
 ```
