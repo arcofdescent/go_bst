@@ -131,7 +131,7 @@ func TestDeleteNodeLeaf(t *testing.T) {
 			t.Errorf("DeleteNode(): 4 found")
 		}
 
-		// delete (left child)
+		// delete (right child)
 		rootNode.AddNode(6)
 		rootNode.DeleteNode(6)
 
