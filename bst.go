@@ -1,19 +1,30 @@
 // sorted binary tree
 package bst
 
+import "sync"
+
 type Node struct {
 	Data                  int
 	LeftChild, RightChild *Node
 	Parent                *Node
+	ch                    chan<- int
 }
 
-func NewRoot(val int) *Node {
+var mu sync.Mutex
+
+func NewRoot(val int, ch chan<- int) *Node {
+
+	defer func() { ch <- 1 }()
+
 	root := Node{}
 	root.Data = val
+	root.ch = ch
 	return &root
 }
 
 func (n *Node) AddNode(val int) {
+
+	defer func() { n.ch <- 1 }()
 
 	// check that val does not already exist, i,e. no dups
 	if n.Search(val) {
@@ -41,6 +52,8 @@ func (n *Node) AddNode(val int) {
 
 func (n *Node) Search(val int) bool {
 
+	defer func() { n.ch <- 1 }()
+
 	// iteratively to prevent a stack overflow
 	// normally this is done using recursion which can
 	// cause a SO for huge trees
@@ -61,6 +74,8 @@ func (n *Node) Search(val int) bool {
 
 func (n *Node) SearchNode(val int) *Node {
 
+	defer func() { n.ch <- 1 }()
+
 	// iteratively to prevent stack overflow
 	currNode := n
 
@@ -78,6 +93,8 @@ func (n *Node) SearchNode(val int) *Node {
 }
 
 func (n *Node) DeleteNode(val int) {
+
+	defer func() { n.ch <- 1 }()
 
 	if !n.Search(val) {
 		return
@@ -134,6 +151,8 @@ func (n *Node) findMinNode() *Node {
 }
 
 func (n *Node) GetItems() []int {
+
+	defer func() { n.ch <- 1 }()
 
 	var vals []int
 
