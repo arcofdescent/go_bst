@@ -7,7 +7,7 @@
 Then...
 
 ```
-cd nilenso_bst
+cd go_bst
 ```
 
 Run the tests
