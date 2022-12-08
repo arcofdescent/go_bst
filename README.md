@@ -1,5 +1,5 @@
 
-###Binary Search Tree implemented in Go (golang)
+# Binaary Search Tree implemented in Go (golang)
 
 * First download Go from <https://golang.org/dl/> and install it
 * Clone this repo
@@ -29,7 +29,7 @@ To run a simple benchmark for **AddNode()**
 go test -bench=.
 ```
 
-####Usage
+# Usage
 
 ```go
 package main
